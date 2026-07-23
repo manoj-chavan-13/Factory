@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply bg-background text-white m-0 font-sans;
+  @apply bg-background text-gray-900 m-0 font-sans;
 }

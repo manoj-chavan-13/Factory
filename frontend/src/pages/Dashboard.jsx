@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Activity, CheckCircle2, XCircle, Clock } from 'lucide-react';
+import { Activity, CheckCircle2, XCircle, Clock, Box } from 'lucide-react';
 import { DataGrid } from '@mui/x-data-grid';
 
-function Dashboard() {
+export default function Dashboard() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function Dashboard() {
         if(params.value === 'SUCCESS') return <span className="flex items-center gap-2 text-success bg-success/10 px-3 py-1 rounded-full text-xs font-bold border border-success/20"><CheckCircle2 size={14}/> SUCCESS</span>;
         if(params.value === 'FAILED') return <span className="flex items-center gap-2 text-danger bg-danger/10 px-3 py-1 rounded-full text-xs font-bold border border-danger/20"><XCircle size={14}/> FAILED</span>;
         if(params.value === 'RUNNING') return <span className="flex items-center gap-2 text-primary bg-primary/10 px-3 py-1 rounded-full text-xs font-bold border border-primary/20"><Activity size={14} className="animate-pulse"/> RUNNING</span>;
-        return <span className="text-gray-400">{params.value}</span>;
+        return <span className="text-gray-500">{params.value}</span>;
       }
     }
   ];
@@ -37,8 +37,8 @@ function Dashboard() {
     >
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Command Center</h1>
-          <p className="text-gray-400">Overview of your infrastructure and recent pipelines.</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2 tracking-tight">Command Center</h1>
+          <p className="text-gray-500">Overview of your infrastructure and recent pipelines.</p>
         </div>
       </div>
 
@@ -49,9 +49,9 @@ function Dashboard() {
         <StatCard title="Avg Build Time" value="2m 14s" icon={<Clock size={20} className="text-gray-400"/>} />
       </div>
 
-      <div className="bg-surface border border-gray-800 rounded-xl overflow-hidden shadow-2xl">
-        <div className="p-6 border-b border-gray-800 bg-surface/50">
-          <h2 className="text-xl font-semibold text-white">Active Projects</h2>
+      <div className="bg-surface border border-gray-200 rounded-xl overflow-hidden shadow-md">
+        <div className="p-6 border-b border-gray-200 bg-gray-50">
+          <h2 className="text-xl font-semibold text-gray-900">Active Projects</h2>
         </div>
         <div style={{ height: 400, width: '100%' }}>
           <DataGrid
@@ -60,10 +60,10 @@ function Dashboard() {
             getRowId={(row) => row._id}
             sx={{
               border: 'none',
-              color: 'white',
-              '& .MuiDataGrid-cell': { borderColor: '#1F2937' },
-              '& .MuiDataGrid-columnHeaders': { backgroundColor: '#111827', borderColor: '#1F2937', color: '#9CA3AF' },
-              '& .MuiDataGrid-footerContainer': { borderTop: '1px solid #1F2937' }
+              color: '#111827',
+              '& .MuiDataGrid-cell': { borderColor: '#E5E7EB' },
+              '& .MuiDataGrid-columnHeaders': { backgroundColor: '#F9FAFB', borderColor: '#E5E7EB', color: '#6B7280' },
+              '& .MuiDataGrid-footerContainer': { borderTop: '1px solid #E5E7EB' }
             }}
           />
         </div>
@@ -74,18 +74,15 @@ function Dashboard() {
 
 function StatCard({ title, value, icon }) {
   return (
-    <div className="bg-surface p-6 rounded-xl border border-gray-800 shadow-lg relative overflow-hidden group hover:border-gray-600 transition-colors">
-      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+    <div className="bg-surface p-6 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden group hover:border-gray-300 transition-colors">
+      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
         {icon}
       </div>
-      <div className="flex items-center gap-2 mb-2 text-gray-400">
+      <div className="flex items-center gap-2 mb-2 text-gray-500">
         {icon}
         <h3 className="text-sm font-medium">{title}</h3>
       </div>
-      <p className="text-4xl font-bold text-white">{value}</p>
+      <p className="text-4xl font-bold text-gray-900">{value}</p>
     </div>
   );
 }
-
-import { Box } from 'lucide-react';
-export default Dashboard;

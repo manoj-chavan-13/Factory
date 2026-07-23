@@ -7,11 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#0B0F19',
-        surface: '#1A202C',
-        primary: '#3B82F6',
-        success: '#10B981',
-        danger: '#EF4444',
+        background: '#F8FAFC', // Light blue-gray background
+        surface: '#FFFFFF',    // Pure white for cards/panels
+        primary: '#2563EB',    // Strong blue
+        success: '#16A34A',    // Green
+        danger: '#DC2626',     // Red
       }
     },
   },
