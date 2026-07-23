@@ -205,9 +205,11 @@ Every language or deployment target is a plugin:
 
 The user interface is designed to rival the best enterprise DevOps tools in the world.
 - **Layout:** A clean sidebar navigation, top-level project breadcrumbs, and a detailed canvas for pipeline visualization.
-- **Components (Material UI):** Enterprise-grade tables for build histories, secure modal popups for managing secrets.
-- **Styling (Tailwind):** Custom dark-mode palettes, glassmorphism elements, and glowing status indicators (green for success, red for failure).
-- **Animations (Framer Motion):** Smooth mounting of pages, animated progress bars for running builds, and satisfying transitions between pipeline stages.
+- **Dashboard (Command Center):** Utilizes `@mui/x-data-grid` to display a professional list of all projects and their latest build statuses.
+- **Pipeline Visualizer:** A stunning node-based graph. Nodes transition from gray to pulsing blue (`RUNNING`) to glowing green (`SUCCESS`).
+- **Live Terminal (Pipeline Simulator):** A custom-built, WebSocket-connected terminal component that renders logs instantly.
+- **Animations:** Framer Motion delivers smooth mounting of pages and satisfying transitions between pipeline stages.
+
 ## 🚀 Getting Started (Installation & Execution)
 
 This section provides a complete guide to running the Factory CI/CD platform locally for development and testing.
