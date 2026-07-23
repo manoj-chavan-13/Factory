@@ -208,4 +208,76 @@ The user interface is designed to rival the best enterprise DevOps tools in the 
 - **Components (Material UI):** Enterprise-grade tables for build histories, secure modal popups for managing secrets.
 - **Styling (Tailwind):** Custom dark-mode palettes, glassmorphism elements, and glowing status indicators (green for success, red for failure).
 - **Animations (Framer Motion):** Smooth mounting of pages, animated progress bars for running builds, and satisfying transitions between pipeline stages.
-- **Live Logs Terminal:** A custom-built, WebSocket-connected terminal component that renders ANSI colors and streams logs perfectly in real time.
+## 🚀 Getting Started (Installation & Execution)
+
+This section provides a complete guide to running the Factory CI/CD platform locally for development and testing.
+
+### Prerequisites
+
+Ensure you have the following installed on your machine:
+- **Node.js** (v18+ recommended)
+- **Python** (v3.10+ recommended)
+- **MongoDB** (Running locally on port `27017` or via MongoDB Atlas)
+- **Docker & Docker Compose**
+- **Kind (Kubernetes in Docker)**
+
+---
+
+### 1. Backend Setup (Flask Engine)
+
+The backend acts as the core orchestrator.
+
+1. **Navigate to the backend directory:**
+   ```bash
+   cd backend
+   ```
+2. **Create a virtual environment:**
+   ```bash
+   python -m venv venv
+   ```
+3. **Activate the virtual environment:**
+   - **Windows:** `venv\Scripts\activate`
+   - **Mac/Linux:** `source venv/bin/activate`
+4. **Install Python dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. **Start the Flask server:**
+   ```bash
+   python app.py
+   ```
+   *The backend will now run on `http://localhost:5000`. It connects to MongoDB by default at `mongodb://localhost:27017/factory`.*
+
+---
+
+### 2. Frontend Setup (React Dashboard)
+
+The frontend is a Vite-powered React application.
+
+1. **Navigate to the frontend directory:**
+   ```bash
+   cd frontend
+   ```
+2. **Install Node dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Initialize Tailwind CSS (if not already done):**
+   ```bash
+   npx tailwindcss init -p
+   ```
+4. **Start the Vite development server:**
+   ```bash
+   npm run dev
+   ```
+   *The frontend dashboard will now be accessible at `http://localhost:5173`.*
+
+---
+
+### 3. Running a Pipeline (Future Roadmap)
+
+Once both servers are running:
+1. Open the React Dashboard.
+2. Create a new "Project" and link a GitHub Repository.
+3. Push code to your repository.
+4. Watch Factory automatically spawn a worker, build the Docker container, and stream the logs live!
