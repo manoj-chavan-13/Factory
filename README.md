@@ -47,35 +47,64 @@ Factory aims to provide a zero-friction deployment experience. The developer sim
 ### Infrastructure & Execution
 - **Containerization:** Docker Engine
 - **Orchestration:** Kubernetes (using `Kind` for local clusters)
-- **Git Provider Integration:** GitHub Webhooks
+- **Git**
 
----
+## 🏗️ Architecture
 
-## 🏗️ High-Level Architecture
+Factory mimics the core concepts of Jenkins, scaled for modern web environments:
+
+1. **Master-Agent (Distributed System)**
+   - **Factory Master (`app.py`)**: The Flask web server. It manages the queue, serves the React dashboard, and pushes real-time WebSocket updates to users.
+   - **Factory Agent (`worker.py`)**: A standalone Python daemon that runs on any node. It polls the Master for jobs, clones code, runs subprocesses, and streams `stdout` back to the Master.
+
+2. **Pipeline-as-Code (`factory.yml`)**
+   - Similar to a `Jenkinsfile`, you can define custom stages inside your repositories.
+   - The Agent dynamically parses `factory.yml` and executes the user-defined commands.
 
 ```mermaid
-graph TD
-    Dev[Developer - Windows / VS Code] -->|Git Push| GitRepo[GitHub Repository]
-    GitRepo -->|Webhook Payload| FactoryCore[Factory Webhook Listener]
+graph TD;
+    User[Developer] -->|git push| GitHub(GitHub Webhook);
+    GitHub -->|Triggers| Master[Factory Master Node];
+    Master -->|Queues Job| Queue[(Job Queue)];
     
-    subgraph "CI/CD Server (Ubuntu / WSL)"
-        FactoryCore --> Engine[Pipeline Engine]
-        
-        subgraph "Backend System (Flask)"
-            Engine
-            Auth[JWT Auth & RBAC]
-            SecretVault[Secrets Manager]
-            Queue[Job Queue]
-        end
-        
-        subgraph "Execution Workers"
-            Runner[Pipeline Runner]
-            DockerPlugin[Docker Builder Plugin]
-            K8sPlugin[Kubernetes Plugin]
-            LanguagePlugins[Node.js / Python Plugins]
-        end
-        
-        Engine --> Queue
+    subgraph Agent Node (Ubuntu/Linux)
+      Worker[Factory Agent worker.py] -->|Polls| Queue;
+      Worker -->|1. git clone| SourceCode;
+      Worker -->|2. parses| FactoryYML(factory.yml);
+      Worker -->|3. executes| Docker(Docker Daemon);
+      Worker -->|Streams stdout| Master;
+    end
+    
+    Master -->|WebSockets| UI[React Dashboard];
+```
+
+## 🚀 Getting Started
+
+### 1. Master Server Setup
+Run this on your main machine:
+```bash
+git clone https://github.com/manoj-chavan-13/Factory-.git
+cd Factory-
+
+# Backend Master
+cd backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python app.py
+
+# Frontend Dashboard
+cd ../frontend
+npm install
+npm run dev
+```
+
+### 2. Agent Node Setup
+Run this on any machine where you want pipelines to execute:
+```bash
+cd backend
+python worker.py
+```        Engine --> Queue
         Queue --> Runner
         Runner --> LanguagePlugins
         Runner --> DockerPlugin
